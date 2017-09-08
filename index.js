@@ -1,6 +1,6 @@
 String.prototype.format = function() {
   var args = arguments;
-  return this.replace(/{(\d+)}/g, function(match, number) {
+  return this.replace(/{(\d+)}/g, (match, number) => {
     return typeof args[number] != 'undefined'
       ? args[number]
       : match
@@ -23,7 +23,7 @@ module.exports = (function() {
 
   self.lastLogIndent = 0;
 
-  self.log = function(message, color, indent, ignore_indent_storage) {
+  self.log = (message, color, indent, ignore_indent_storage) => {
     if (!color) {
       color = self.colors.grey;
     }
@@ -46,20 +46,20 @@ module.exports = (function() {
     console.log(color('[ ' + self.moment().format('MMMM Do YYYY, h:mm:ss a') + ' ] {0}{1}'.format(indent_str, message)));
   };
 
-  self.time = function(f) {
+  self.time = (f) => {
     var start = (new Date()).getTime();
-    return self.defer(function(deferred) {
+    return self.defer((deferred) => {
       f(deferred);
-    }).then(function() {
+    }).then(() => {
       var now = (new Date()).getTime();
       self.log('Total time {0}ms'.format(now-start), undefined, self.lastLogIndent+1);
     });
   };
 
-  self.reduce = function(arrList, callback) {
-    return self.defer(function(deferred) {
+  self.reduce = (arrList, callback) => {
+    return self.defer((deferred) => {
       arrList.reduce(
-        function(previous, value, offset) {
+        (previous, value, offset) => {
           return previous.then(function() {
             return self.defer(function(deferred) {
               callback(value, offset, deferred);
@@ -67,31 +67,35 @@ module.exports = (function() {
           });
         },
         self.defer(
-          function(deferred) {
+          (deferred) => {
             deferred.resolve();
           }
         )
-      ).then(function() {
+      ).then(() => {
         deferred.resolve();
-      }).fail(function(err) {
+      }).fail((err) => {
         console.log(err);
         deferred.resolve();
       });
     });
   };
 
-  self.defer = function(f) {
+  self.defer = (f) => {
     var deferred = self.Q.defer();
     f(deferred);
     return deferred.promise;
   };
 
-  self.toSatoshi = function(value) {
+  self.toSatoshi = (value) => {
     return self.math.round(value, 8);
   };
 
-  self.totalSatoshi = function(v1, v2) {
+  self.totalSatoshi = (v1, v2) => {
     return self.toSatoshi(self.toSatoshi(v1) * self.toSatoshi(v2));
+  };
+
+  self.pctDiff = (v1, v2) => {
+    return self.math.round(((v1 - v2) / v1) * 100, 2);
   };
 
   return self;
