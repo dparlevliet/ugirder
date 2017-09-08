@@ -1,0 +1,43 @@
+
+  "author": {
+    "name": "David Parlevliet",
+    "email": "nothanks@mailinator.com"
+  },
+  "bugs": {
+    "url": "https://github.com/dparlevliet/ugirder/issues"
+  },
+  "contributors": [
+    {
+      "name": "David Parlevliet",
+      "email": "nothanks@mailinator.com",
+      "url": "https://github.com/dparlevliet/ugirder"
+    }
+  ],
+  "maintainers": [
+    {
+      "name": "David Parlevliet",
+      "email": "nothanks@mailinator.com",
+      "url": "https://github.com/dparlevliet/ugirder"
+    }
+  ],
+  "dependencies": {
+    "colors": "^1.1.2",
+    "mathjs": "^3.8.1",
+    "moment": "^2.17.1",
+    "moment-timezone": "^0.5.10",
+    "q": "^1.4.1"
+  },
+  "license": "MIT",
+  "name": "ugirder",
+  "optionalDependencies": {},
+  "readme": "README.md",
+  "scripts": {
+    "start": "nodejs index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dparlevliet/ugirder.git"
+  },
+  "version": "0.0.1",
+  "devDependencies": {
+  }
